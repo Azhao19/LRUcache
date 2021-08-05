@@ -8,6 +8,7 @@ import glob
 # empty
 # number of caches to create
 # list of cache names
+
 if (not glob.glob(os.path.join(Path("."), "cache"))):
     os.mkdir("cache")
 cache = Path("./cache")
@@ -15,11 +16,10 @@ cache = Path("./cache")
 if (len(sys.argv) == 1 and not glob.glob(os.path.join(cache, "*"))):
     print("No cache folder detected. Creating one now.") 
     path = os.path.join(cache, "cache")  
-    os.mkdir(path)
-    sys.exit(0)
+    os.mkdir(os.path.join(cache, "cache")
 
 # Case 2: just a number
-if (len(sys.argv) == 2):
+else if (len(sys.argv) == 2):
     if (not sys.argv[1].isdigit()):
         print("Must provide number of caches to create.")
         sys.exit(1);
@@ -44,11 +44,9 @@ if (len(sys.argv) == 2):
             if (not os.path.exists(os.path.join(cache, "cache_%d" % i))):
                 os.mkdir(os.path.join(cache, "cache_%d" % i))
             i = i - 1
-    sys.exit(0)
-if (len(sys.argv) > 2):
+else (len(sys.argv) > 2):
     for x in sys.argv:
         if (x == "./mkdir.py"):
             continue
         if (not os.path.exists(os.path.join(cache, x))):
             os.mkdir(os.path.join(cache,x))
-    sys.exit(0)
