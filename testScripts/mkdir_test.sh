@@ -19,3 +19,4 @@ do
     echo "$entry"
 done
 cd ..
+rm -r cache
