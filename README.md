@@ -30,5 +30,5 @@ Args to mkdir.py:
 
 LRUcache.py: works with caches one-by-one to prevent memory overload. That is, for each (URL, cache), it opens cache, adds file, deletes LRU files until memory is low enough
 
-- Later on: add caches with automatic web scraping features (e.g., for arxiv, twitter accounts, etc)
+- Later on: add caches with automatic web scraping features (e.g., for arxiv, twitter accounts, etc); use flag -s for this
 
