@@ -26,9 +26,15 @@ Will require some flags
 Args to mkdir.py:
 - None
 - A single number
-- A list of ordered pairs x1,y1 x2,y2 where y* is memory size of cache, set to 500 MB by default, store this value in file “.size”
+- A list of ordered pairs x1,y1 x2,y2 where y is memory size of cache, set to 500 MB by default, store this value in file “.size”
 
 LRUcache.py: works with caches one-by-one to prevent memory overload. That is, for each (URL, cache), it opens cache, adds file, deletes LRU files until memory is low enough
 
 - Later on: add caches with automatic web scraping features (e.g., for arxiv, twitter accounts, etc); use flag -s for this
 
+
+LIST OF FLAGS:
+-r remove
+-f force to remove
+-c cache creation
+-s scrape
