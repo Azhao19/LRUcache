@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # Base code for LRUCache courtesy of Jerry An on levelup.gitconnected.com.
 
 class LinkedNode(object):          # Doubly linked list struct
