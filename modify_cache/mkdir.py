@@ -53,12 +53,10 @@ elif (len(sys.argv) == 2 and sys.argv[1].isdigit()):
 else:
     for x in sys.argv[1:]:
         x = x.split(",")
-        print(x)
         if (len(x) > 2 or (len(x) == 2 and not x[1].isdigit())):
             print("To make directory, format data as a spaced list of the form x_k,y_k.")
             exit(1)
         elif (len(x) == 1):
-            print("here")
             if (not os.path.exists(os.path.join(cache, x[0]))):
                 os.mkdir(os.path.join(cache,x[0]))
                 write_size(os.path.join(cache,x[0]), 500)
