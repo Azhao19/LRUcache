@@ -24,10 +24,7 @@ if (len(sys.argv) == 1 and not glob.glob(os.path.join(cache, "*"))):
     os.mkdir(os.path.join(cache, "cache"))
     write_size(os.path.join(cache, "cache"), DEFAULT_CACHE_SIZE)
 # Case 2: just a number
-elif (len(sys.argv) == 2):
-    if (not sys.argv[1].isdigit()):
-        print("Must provide number of caches to create.")
-        sys.exit(1);
+elif (len(sys.argv) == 2 and sys.argv[1].isdigit()):
     i = int(sys.argv[1])
     j = 0
     if (os.path.exists(os.path.join(cache, "cache"))):
@@ -53,6 +50,10 @@ elif (len(sys.argv) == 2):
             i = i - 1
 else:
     for x in sys.argv[1:]:
+        x = x.split(",")
+        if (len(x) == 1 or len(x) > 2 or not x[1].isdigit()):
+            print("To make directory, format data as a spaced list of the form x_k,y_k.")
+            exit(1)
         if (not os.path.exists(os.path.join(cache, x[0]))):
             os.mkdir(os.path.join(cache,x[0]))
             write_size(os.path.join(cache,x[0]),int(x[1]))
