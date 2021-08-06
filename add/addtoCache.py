@@ -44,11 +44,20 @@ for x in sys.argv[1:]:
         else:
             os.waitpid(pid, 0)
             os.rename(os.path.basename(split.path), p)
+            p = Path("../cache/%s" % x[1])
+            p_size = os.path.join(p, ".size")
+            p_files = os.path.join(p, ".files")
             
-            f = open("../cache/%s/.size" % x[1], "r")
+            f = open(p_size, "r")
             lines = f.readlines()
-            y = int(lines[1]) + round(os.stat(p).st_size / (1024 * 1024), 3)
+            y = float(lines[1]) + round(os.stat(p).st_size / (1024 * 1024), 8)
             lines[1] = str(y)
-            f = open("../cache/%s/.size" % x[1], "w")
+            f = open(p_size, "w")
             f.writelines(lines)
             f.close()
+
+            # maintain list of files in LRU order
+            # most recent is at the bottom of the file
+            g = open(p_files, "a")
+            g.write(os.path.basename(split.path))
+            g.close()
