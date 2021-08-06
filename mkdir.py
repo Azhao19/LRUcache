@@ -9,6 +9,11 @@ import glob
 # number of caches to create
 # list of cache names
 
+DEFAULT_CACHE_SIZE = 500     # size in MB
+def write_size(path, size: int):
+    f = open(os.path.join(path, ".size"), "w")
+    f.write("%d" % size)
+    f.close()
 if (not glob.glob(os.path.join(Path("."), "cache"))):
     os.mkdir("cache")
 cache = Path("./cache")
@@ -17,7 +22,7 @@ if (len(sys.argv) == 1 and not glob.glob(os.path.join(cache, "*"))):
     print("No cache folder detected. Creating one now.") 
     path = os.path.join(cache, "cache")  
     os.mkdir(os.path.join(cache, "cache"))
-
+    write_size(os.path.join(cache, "cache"), DEFAULT_CACHE_SIZE)
 # Case 2: just a number
 elif (len(sys.argv) == 2):
     if (not sys.argv[1].isdigit()):
@@ -30,23 +35,24 @@ elif (len(sys.argv) == 2):
         while (i > 0):
             if (not os.path.exists(os.path.join(cache, "cache_%d" % i))):
                 os.mkdir(os.path.join(cache, "cache_%d" % i))
+                write_size(os.path.join(cache, "cache_%d" % i), DEFAULT_CACHE_SIZE)
             i = i - 1
     elif (os.path.exists(os.path.join(cache, "cache_0"))):
-        while (os.path.exists(os.path.join(cache, "cache_%d" % j))):
-            j += 1
         while (i > 0):
             if (not os.path.exists(os.path.join(cache, "cache_%d" % j))):
                 os.mkdir(os.path.join(cache, "cache_%d" % j))
-            i = i - 1
+                write_size(os.path.join(cache, "cache_%d" % j), DEFAULT_CACHE_SIZE)
+                i = i - 1
+            j += 1
     else:
         i = i - 1
         while (i > -1):
             if (not os.path.exists(os.path.join(cache, "cache_%d" % i))):
                 os.mkdir(os.path.join(cache, "cache_%d" % i))
+                write_size(os.path.join(cache, "cache_%d" % i), DEFAULT_CACHE_SIZE)
             i = i - 1
 else:
-    for x in sys.argv:
-        if (x == "./mkdir.py"):
-            continue
-        if (not os.path.exists(os.path.join(cache, x))):
-            os.mkdir(os.path.join(cache,x))
+    for x in sys.argv[1:]:
+        if (not os.path.exists(os.path.join(cache, x[0]))):
+            os.mkdir(os.path.join(cache,x[0]))
+            write_size(os.path.join(cache,x[0]),int(x[1]))
