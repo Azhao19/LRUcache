@@ -40,7 +40,7 @@ for x in sys.argv[1:]:
             print("Fork failed.")
             exit(1)
         elif (pid == 0):  # child
-            os.execlp("./http-client", "./http-client", split.netloc, "80", split.path)
+            os.execlp("./wget", "./wget", split.netloc, "80", split.path)
         else:
             os.waitpid(pid, 0)
             os.rename(os.path.basename(split.path), p)
@@ -60,4 +60,5 @@ for x in sys.argv[1:]:
             # most recent is at the bottom of the file
             g = open(p_files, "a")
             g.write(os.path.basename(split.path))
+            g.write("\n")
             g.close()
