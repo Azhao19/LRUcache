@@ -11,6 +11,7 @@ import sys
 import argparse
 from LRUCache import *
 
+list_of_LRU_caches = {}
 def help():
     print("create: create caches. You may supply the number of caches to create or a list of specific names. To initialize your first cache, simply run with no additional arguments.")
     print("remove: remove caches.")
@@ -32,8 +33,10 @@ for line in sys.stdin:
         if (line[0] == "exit"):
             print("Exiting cache manager.")
             break
-        if (line[0] == "help"):
+        if (line[0] == "help" or line[0] == ""):
             help()
+            print(">>", end=' ', flush=True)
+            continue
         if (not line[0] == "create" and len(line) == 1):
             print("Insufficient arguments provided. The following commands you may use are listed here:")
             help()
