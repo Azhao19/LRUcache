@@ -38,3 +38,6 @@ LIST OF FLAGS:
 -f force to remove
 -c cache creation
 -s scrape
+
+TODO:
+- make all files read-only when in the simulated shell
