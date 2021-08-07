@@ -33,7 +33,9 @@ for x in sys.argv[1:]:
         if (re.match(regex, x[0]) is None):
             print("Invalid URL.")
             exit(1)
+
         split = urlsplit(x[0])
+        
         p = os.path.join("./cache/%s" % x[1], os.path.basename(split.path))
         pid = os.fork()
         if (pid < 0):
@@ -48,9 +50,35 @@ for x in sys.argv[1:]:
             p_size = os.path.join(p, ".size")
             p_files = os.path.join(p, ".files")
             
+            p = os.path.join("./cache/%s" % x[1], os.path.basename(split.path))
             f = open(p_size, "r")
             lines = f.readlines()
-            y = float(lines[1]) + round(os.stat(p).st_size / (1024 * 1024), 8)
+
+            sizetoAdd = round(os.stat(p).st_size / (1024 * 1024), 8)
+            if (sizetoAdd > float(lines[0])):
+                print("File is too large.")
+                execlp("rm", "rm", "-r", os.path.basename(split.path))
+
+            y = float(lines[1]) + sizetoAdd
+            g = open(p_files, "r")
+            files = g.readlines()
+            while (y > float(lines[0])):
+                remove = files.pop(0).strip("\n")
+                size = round(os.stat(Path("./cache/%s/%s" % (x[1], remove))).st_size / (1024 * 1024), 8)
+                rm = os.fork()
+                if (rm < 0):
+                    print("Fork failed.")
+                    exit(1)
+                elif (rm == 0):
+                    os.execlp("rm", "rm", "-r", os.path.join("./cache/%s" % x[1], remove))
+                else:
+                    os.waitpid(rm, 0)
+                    y -= size
+            g = open(p_files, "w")
+            for d in files:
+                g.write(d)
+            g.close()
+
             lines[1] = str(y)
             f = open(p_size, "w")
             f.writelines(lines)
