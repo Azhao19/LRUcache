@@ -22,7 +22,6 @@ regex = re.compile(
 
 for x in sys.argv[1:]:
     x = x.split(",")
-    print(x)
     if (not len(x) == 2):
         print("Input must take the form u_k,c_k (URL,cache).")
         exit(1)
