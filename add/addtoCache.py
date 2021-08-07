@@ -18,6 +18,7 @@ regex = re.compile(
         r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
         r'(?::\d+)?' # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
 # Input takes the form of a list URL,cache
 
 for x in sys.argv[1:]:
