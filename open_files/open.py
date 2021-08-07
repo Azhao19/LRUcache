@@ -9,11 +9,11 @@ import os
 import sys
 from pathlib import Path
 
-if (not os.path.exists(os.path.join(Path(".."), "cache"))):
+if (not os.path.exists(os.path.join(Path("."), "cache"))):
     print("File does not exist.")
     exit(1)
 
-p = Path("../cache")
+p = Path("./cache")
 for x in sys.argv[1:]:
     x = x.split(",")
     if (not len(x) == 2):

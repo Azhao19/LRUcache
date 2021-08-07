@@ -16,9 +16,9 @@ def write_size(path, size: int):
     f.write("%d\n0" % size)
     f.close()
     g.close()
-if (not glob.glob(os.path.join(Path(".."), "cache"))):
-    os.mkdir("../cache")
-cache = Path("../cache")
+if (not glob.glob(os.path.join(Path("."), "cache"))):
+    os.mkdir("./cache")
+cache = Path("./cache")
 # Case 1: empty
 if (len(sys.argv) == 1 and not glob.glob(os.path.join(cache, "*"))):
     print("No cache folder detected. Creating one now.") 

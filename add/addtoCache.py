@@ -27,24 +27,24 @@ for x in sys.argv[1:]:
         print("Input must take the form u_k,c_k (URL,cache).")
         exit(1)
     else:
-        if (not os.path.exists(os.path.join(Path("../cache"),x[1]))):
+        if (not os.path.exists(os.path.join(Path("./cache"),x[1]))):
             print("Invalid cache.")
             exit(1)
         if (re.match(regex, x[0]) is None):
             print("Invalid URL.")
             exit(1)
         split = urlsplit(x[0])
-        p = os.path.join("../cache/%s" % x[1], os.path.basename(split.path))
+        p = os.path.join("./cache/%s" % x[1], os.path.basename(split.path))
         pid = os.fork()
         if (pid < 0):
             print("Fork failed.")
             exit(1)
         elif (pid == 0):  # child
-            os.execlp("./wget", "./wget", split.netloc, "80", split.path)
+            os.execlp("./add/wget", "./wget", split.netloc, "80", split.path)
         else:
             os.waitpid(pid, 0)
             os.rename(os.path.basename(split.path), p)
-            p = Path("../cache/%s" % x[1])
+            p = Path("./cache/%s" % x[1])
             p_size = os.path.join(p, ".size")
             p_files = os.path.join(p, ".files")
             
